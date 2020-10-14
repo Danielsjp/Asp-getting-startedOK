@@ -8852,11 +8852,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sjpda\\source\\repos\\Started\\Started\\Started.csproj",
+      "projectUniqueName": "C:\\Users\\sjpda\\source\\repos\\Started with DDBB\\Asp-getting-started\\Started\\Started.csproj",
       "projectName": "Started",
-      "projectPath": "C:\\Users\\sjpda\\source\\repos\\Started\\Started\\Started.csproj",
+      "projectPath": "C:\\Users\\sjpda\\source\\repos\\Started with DDBB\\Asp-getting-started\\Started\\Started.csproj",
       "packagesPath": "C:\\Users\\sjpda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sjpda\\source\\repos\\Started\\Started\\obj\\",
+      "outputPath": "C:\\Users\\sjpda\\source\\repos\\Started with DDBB\\Asp-getting-started\\Started\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sjpda\\AppData\\Roaming\\NuGet\\NuGet.Config",

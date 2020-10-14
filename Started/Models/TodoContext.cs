@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Started.Models;
+using System.Data.SqlClient;
 
 namespace Started.Models
 {
@@ -8,10 +10,14 @@ namespace Started.Models
         public TodoContext(DbContextOptions<TodoContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Started.Models.TodoItem> TodoItems { get; set; }
-
         public DbSet<Started.Models.Employees> Employees { get; set; }
+
+       
     }
+
+
 }

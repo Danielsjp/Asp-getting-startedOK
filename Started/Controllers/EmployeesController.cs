@@ -12,27 +12,26 @@ namespace Started.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
-    {
-        private readonly TodoContext _context;
+    { 
+        private readonly TodoContext context;
 
         public EmployeesController(TodoContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         // GET: api/Employees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employees>>> GetEmployees()
         {
-            return await _context.Employees.ToListAsync();
+            return context.Employees.ToList();
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employees>> GetEmployees(long id)
+        public async Task<ActionResult<Employees>> GetEmployees(int id)
         {
-            var employees = await _context.Employees.FindAsync(id);
-
+            var employees = context.Employees.FirstOrDefault(p => p.Id == id);
             if (employees == null)
             {
                 return NotFound();
@@ -45,18 +44,18 @@ namespace Started.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployees(long id, Employees employees)
+        public async Task<IActionResult> PutEmployees(int id, Employees employees)
         {
             if (id != employees.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employees).State = EntityState.Modified;
+            context.Entry(employees).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,31 +78,31 @@ namespace Started.Controllers
         [HttpPost]
         public async Task<ActionResult<Employees>> PostEmployees(Employees employees)
         {
-            _context.Employees.Add(employees);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployees", new { id = employees.Id }, employees);
+                context.Employees.Add(employees);
+                await context.SaveChangesAsync();
+                return CreatedAtAction("GetEmployees", new { id = employees.Id }, employees);                   
         }
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Employees>> DeleteEmployees(long id)
+        public async Task<ActionResult<Employees>> DeleteEmployees(int id)
         {
-            var employees = await _context.Employees.FindAsync(id);
+            var employees = await context.Employees.FindAsync(id);
             if (employees == null)
             {
                 return NotFound();
             }
 
-            _context.Employees.Remove(employees);
-            await _context.SaveChangesAsync();
+            context.Employees.Remove(employees);
+            await context.SaveChangesAsync();
 
             return employees;
         }
 
-        private bool EmployeesExists(long id)
+        private bool EmployeesExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return context.Employees.Any(e => e.Id == id);
         }
     }
 }

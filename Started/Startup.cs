@@ -17,6 +17,7 @@ namespace Started
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,8 +28,18 @@ namespace Started
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Started.Models.TodoContext>(opt =>
-             opt.UseInMemoryDatabase("TodoList"));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                      
+                                  });
+            });
+            services.AddDbContext<Started.Models.TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserDatabase")));
             services.AddControllers();
         }
 
@@ -39,7 +50,9 @@ namespace Started
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(MyAllowSpecificOrigins);
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
